@@ -72,7 +72,7 @@ Sur Windows, Spark/Hadoop peut exiger `winutils.exe` pour gérer des métadonné
   - Chemins: `./out/paths/paths-YYYYMMDD-HHmmss.jsonl`
   - Heatmap: `./out/heatmap/heatmap-YYYYMMDD-HHmmss.jsonl`
 - Pour forcer l’usage de Spark (si vous avez installé `winutils.exe` ou utilisez WSL2):
-  `sbt "runMain test.apachesparkscala.contentsquare.Main -- --source=kafka --kafkaBrokers=localhost:9092 --kafkaTopic=webevents --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=2 --forceSparkOnWindows=true"`
+  `sbt "runMain test.apachesparkscala.visitorflow.Main -- --source=kafka --kafkaBrokers=localhost:9092 --kafkaTopic=webevents --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=2 --forceSparkOnWindows=true"`
 
 ## Conformité (rappel synthétique)
 - Environnement de test fermé sans PII pour les essais locaux. Pour tout site client: cadre contractuel (DPA), CMP/consentement, minimisation des données et sécurité appropriée.

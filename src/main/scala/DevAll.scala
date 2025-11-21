@@ -1,4 +1,4 @@
-package test.apachesparkscala.contentsquare
+package test.apachesparkscala.visitorflow
 
 /**
   * Lance le pont HTTP→Kafka + l'appli Spark (lecture Kafka) dans le même JVM.

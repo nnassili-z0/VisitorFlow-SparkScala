@@ -5,7 +5,7 @@ ThisBuild / scalaVersion := "2.13.16"
 lazy val root = (project in file("."))
   .settings(
     name := "VisitorFlow-SparkScala",
-    idePackagePrefix := Some("test.apachesparkscala.contentsquare"),
+    idePackagePrefix := Some("test.apachesparkscala.visitorflow"),
     libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-core" % "3.5.1",
       "org.apache.spark" %% "spark-sql" % "3.5.1",
@@ -36,22 +36,22 @@ lazy val root = (project in file("."))
 //   sbt streamKafka
 addCommandAlias(
   "genData",
-  "runMain test.apachesparkscala.contentsquare.SampleEventGenerator"
+  "runMain test.apachesparkscala.visitorflow.SampleEventGenerator"
 )
 addCommandAlias(
   "streamFiles",
-  "runMain test.apachesparkscala.contentsquare.Main -- --source=files --inputPath=./data/events --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=30"
+  "runMain test.apachesparkscala.visitorflow.Main -- --source=files --inputPath=./data/events --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=30"
 )
 addCommandAlias(
   "bridge",
-  "runMain test.apachesparkscala.contentsquare.HttpKafkaBridge -- --port=8080 --kafkaBrokers=localhost:9092 --kafkaTopic=webevents"
+  "runMain test.apachesparkscala.visitorflow.HttpKafkaBridge -- --port=8080 --kafkaBrokers=localhost:9092 --kafkaTopic=webevents"
 )
 addCommandAlias(
   "streamKafka",
-  "runMain test.apachesparkscala.contentsquare.Main -- --source=kafka --kafkaBrokers=localhost:9092 --kafkaTopic=webevents --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=2"
+  "runMain test.apachesparkscala.visitorflow.Main -- --source=kafka --kafkaBrokers=localhost:9092 --kafkaTopic=webevents --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=2"
 )
 
 addCommandAlias(
   "devUp",
-  "runMain test.apachesparkscala.contentsquare.DevAll -- --port=8080 --kafkaBrokers=localhost:9092 --kafkaTopic=webevents --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=2"
+  "runMain test.apachesparkscala.visitorflow.DevAll -- --port=8080 --kafkaBrokers=localhost:9092 --kafkaTopic=webevents --outputPath=./out --checkpointPath=./chk --sessionTimeoutMinutes=2"
 )

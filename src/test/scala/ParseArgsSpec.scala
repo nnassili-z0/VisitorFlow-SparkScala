@@ -1,4 +1,4 @@
-package test.apachesparkscala.contentsquare
+package test.apachesparkscala.visitorflow
 
 import org.scalatest.funsuite.AnyFunSuite
 

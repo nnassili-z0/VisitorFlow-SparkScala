@@ -1,4 +1,4 @@
-package test.apachesparkscala.contentsquare
+package test.apachesparkscala.visitorflow
 
 import com.sun.net.httpserver.{HttpExchange, HttpHandler, HttpServer}
 import java.net.InetSocketAddress
@@ -14,7 +14,7 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
   * Usage:
   *   sbt bridge
   *   ou
-  *   sbt "runMain test.apachesparkscala.contentsquare.HttpKafkaBridge -- --port=8080 --kafkaBrokers=localhost:9092 --kafkaTopic=webevents"
+  *   sbt "runMain test.apachesparkscala.visitorflow.HttpKafkaBridge -- --port=8080 --kafkaBrokers=localhost:9092 --kafkaTopic=webevents"
   */
 object HttpKafkaBridge {
   final case class BridgeHandle(server: HttpServer, producer: KafkaProducer[String, String]) {

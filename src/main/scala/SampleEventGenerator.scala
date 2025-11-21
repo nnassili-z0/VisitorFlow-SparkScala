@@ -1,4 +1,4 @@
-package test.apachesparkscala.contentsquare
+package test.apachesparkscala.visitorflow
 
 import java.io.{BufferedWriter, File, FileWriter}
 import java.time.Instant

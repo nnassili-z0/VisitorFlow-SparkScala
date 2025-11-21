@@ -1,4 +1,4 @@
-package test.apachesparkscala.contentsquare
+package test.apachesparkscala.visitorflow
 
 import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 import org.apache.spark.sql.functions._

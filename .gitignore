@@ -1,0 +1,32 @@
+# SBT/Scala build outputs
+target/
+project/target/
+project/project/
+
+# Spark/Job outputs and checkpoints
+out/
+chk/
+logs/
+
+# Local data (generated examples)
+data/events/
+
+# IDEs and tooling
+.idea/
+*.iml
+.bsp/
+.metals/
+.classpath
+.project
+.settings/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.tmp
+*.swp
+*.bak

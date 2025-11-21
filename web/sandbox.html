@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sandbox Tracking Local</title>
+    <style>
+      body { font-family: system-ui, Arial, sans-serif; margin: 2rem; }
+      .row { margin-bottom: .75rem; }
+      #log { height: 200px; overflow: auto; background: #111; color: #0f0; padding: .5rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      button { padding: .5rem 1rem; }
+      label { display:inline-block; width: 160px; }
+    </style>
+  </head>
+  <body>
+    <h1>Sandbox Tracking Local UI</h1>
+    <p>Cette page envoie des événements (view, click, scroll) au pont HTTP -&gt; Kafka.</p>
+
+    <div class="row">
+      <label for="bridgeUrl">Bridge URL</label>
+      <input id="bridgeUrl" value="http://localhost:8080/event" size="40" />
+    </div>
+    <div class="row">
+      <label for="userId">User ID</label>
+      <input id="userId" value="sandbox-user-1" />
+    </div>
+    <div class="row">
+      <button id="btnCta">Call To Action</button>
+      <button id="btnEmitView">Emit View</button>
+      <button id="btnClear">Clear Log</button>
+    </div>
+
+    <h3>Log</h3>
+    <pre id="log"></pre>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const log = (m) => { const el = $("log"); el.textContent += m + "\n"; el.scrollTop = el.scrollHeight; };
+
+      function buildEvent(eventType, element, x, y) {
+        return {
+          userId: $("userId").value || 'sandbox-user-1',
+          timestamp: Date.now(),
+          eventType: eventType, // 'click' | 'view' | 'scroll' | 'mousemove'
+          pageUrl: location.href,
+          referrer: document.referrer || '',
+          element: element || 'body',
+          x: (typeof x === 'number') ? x : null,
+          y: (typeof y === 'number') ? y : null,
+          screenWidth: window.innerWidth,
+          screenHeight: window.innerHeight,
+          meta: '{}'
+        };
+      }
+
+      async function emit(ev) {
+        const url = $("bridgeUrl").value.trim();
+        log("POST -> " + url + " " + JSON.stringify(ev));
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ev)
+          });
+          const text = await res.text();
+          log("<- status=" + res.status + " body=" + text);
+        } catch (e) {
+          log("ERR: " + e);
+        }
+      }
+
+      window.addEventListener('load', () => {
+        emit(buildEvent('view', 'body'));
+      });
+
+      document.addEventListener('click', (e) => {
+        const sel = e.target.id ? ('#' + e.target.id) : e.target.tagName.toLowerCase();
+        if (sel === '#btnEmitView' || sel === '#btnClear' || sel === '#bridgeUrl' || sel === '#userId') return;
+        emit(buildEvent('click', sel, e.clientX, e.clientY));
+      });
+
+      document.addEventListener('scroll', () => {
+        emit(buildEvent('scroll', 'body'));
+      }, { passive: true });
+
+      $("btnCta").addEventListener('click', (e) => {
+        e.stopPropagation();
+        emit(buildEvent('click', '#btnCta', 100, 100));
+      });
+
+      $("btnEmitView").addEventListener('click', (e) => {
+        e.stopPropagation();
+        emit(buildEvent('view', 'manual'));
+      });
+
+      $("btnClear").addEventListener('click', (e) => {
+        e.stopPropagation();
+        $("log").textContent = '';
+      });
+    </script>
+  </body>
+</html>

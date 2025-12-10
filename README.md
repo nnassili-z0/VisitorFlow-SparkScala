@@ -79,3 +79,5 @@ Sur Windows, Spark/Hadoop peut exiger `winutils.exe` pour gérer des métadonné
 
 ## Tests
 - Un seul test unitaire est fourni (`ParseArgsSpec`) pour vérifier le parsing d’arguments; lancez `sbt test`.
+
+ok!
